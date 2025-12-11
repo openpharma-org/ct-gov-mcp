@@ -1,8 +1,6 @@
 # ClinicalTrials.gov MCP Server
 
-[![CI/CD Pipeline](https://github.com/uh-joan/ct.gov-mcp-server/actions/workflows/ci.yml/badge.svg)](https://github.com/uh-joan/ct.gov-mcp-server/actions/workflows/ci.yml)
-[![Performance Monitoring](https://github.com/uh-joan/ct.gov-mcp-server/actions/workflows/performance.yml/badge.svg)](https://github.com/uh-joan/ct.gov-mcp-server/actions/workflows/performance.yml)
-[![npm version](https://img.shields.io/npm/v/%40uh-joan%2Fct.gov-mcp-server)](https://www.npmjs.com/package/@uh-joan/ct.gov-mcp-server)
+[![npm version](https://img.shields.io/npm/v/%40uh-joan%2Fct.gov-mcp-server)](https://www.npmjs.com/package/@openpharma-org/ct-gov-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![MCP SDK](https://img.shields.io/badge/MCP%20SDK-0.6.0-green.svg)](https://github.com/modelcontextprotocol/typescript-sdk)
 
@@ -31,7 +29,7 @@ Add to your `~/.cursor/mcp.json`:
 {
    "ct.gov-mcp-server": {
       "command": "npx",
-      "args": ["-y","@uh-joan/ct.gov-mcp-server@0.4.7"],
+      "args": ["-y","@openpharma-org/ct-gov-mcp@0.4.7"],
       "env": {}
     },
 }
@@ -891,7 +889,6 @@ npm run build              # Build TypeScript
 npm run clean              # Clean build artifacts
 ```
 
-### Performance Monitoring
 ```bash
 npm run benchmark          # Run performance benchmarks
 npm run performance        # Monitor performance metrics
