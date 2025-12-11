@@ -1,8 +1,4 @@
-# ClinicalTrials.gov MCP Server
-
-[![npm version](https://img.shields.io/npm/v/%40uh-joan%2Fct.gov-mcp-server)](https://www.npmjs.com/package/@openpharma-org/ct-gov-mcp)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![MCP SDK](https://img.shields.io/badge/MCP%20SDK-0.6.0-green.svg)](https://github.com/modelcontextprotocol/typescript-sdk)
+# Unofficial ClinicalTrials.gov MCP Server
 
 A specialized Model Context Protocol (MCP) server that provides comprehensive access to ClinicalTrials.gov data through two powerful tools for clinical trial research and discovery.
 
@@ -903,22 +899,6 @@ npm run performance        # Monitor performance metrics
 - **Transport:** MCP Protocol (stdio/HTTP/SSE)
 - **Build:** TypeScript compiler with ES modules
 
-## 📚 Documentation
-
-- [Template Guide](docs/TEMPLATE-GUIDE.md) - Original template documentation
-- [Development Workflow](docs/DEVELOPMENT-WORKFLOW.md) - Development practices
-- [Testing Strategy](docs/TESTING-STRATEGY.md) - Testing approach
-- [CI/CD Enhancements](docs/CI-CD-ENHANCEMENTS.md) - Automation details
-- [Environment Configuration](docs/ENVIRONMENT-CONFIGURATION.md) - Setup guide
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Add tests for new functionality
-4. Ensure all tests pass
-5. Submit a pull request
-
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
@@ -930,4 +910,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Built for researchers, clinicians, and developers working with clinical trial data.** 
+**Built with love** 
