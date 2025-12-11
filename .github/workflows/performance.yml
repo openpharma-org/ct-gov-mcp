@@ -1,0 +1,256 @@
+name: Performance Monitoring
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Run performance benchmarks daily at 3 AM UTC
+    - cron: '0 3 * * *'
+
+permissions:
+  contents: write  # Required for gh-pages deployment
+  actions: read
+
+jobs:
+  benchmark:
+    name: Performance Benchmarks
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci --include=dev
+        
+      - name: Build project
+        run: npm run build
+        
+      - name: Run comprehensive benchmarks
+        run: |
+          echo "🚀 Running Main Benchmarks..."
+          npm run bench
+          echo "🔧 Running Tool Benchmarks..."
+          npm run bench:tools
+          echo "🚀 Running Transport Benchmarks..."
+          npm run bench:transports
+          
+      - name: Store benchmark results
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          name: 'MCP Server Benchmarks'
+          tool: 'customBiggerIsBetter'
+          output-file-path: benchmark-results.json
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          auto-push: true
+          alert-threshold: '2000%'
+          comment-on-alert: true
+          fail-on-alert: false
+          alert-comment-cc-users: '@maintainer'
+          gh-pages-branch: gh-pages
+          benchmark-data-dir-path: dev/bench
+          
+      - name: Store tool benchmark results
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          name: 'Tool Performance'
+          tool: 'customBiggerIsBetter'
+          output-file-path: tool-benchmark-results.json
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          auto-push: true
+          alert-threshold: '2000%'
+          comment-on-alert: true
+          fail-on-alert: false
+          gh-pages-branch: gh-pages
+          benchmark-data-dir-path: dev/bench
+          
+      - name: Store transport benchmark results
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          name: 'Transport Performance'
+          tool: 'customBiggerIsBetter'
+          output-file-path: transport-benchmark-results.json
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          auto-push: true
+          alert-threshold: '2000%'
+          comment-on-alert: true
+          fail-on-alert: false
+          gh-pages-branch: gh-pages
+          benchmark-data-dir-path: dev/bench
+          
+      - name: Performance regression check
+        run: |
+          echo "📊 Analyzing performance trends..."
+          node -e "
+            const fs = require('fs');
+            
+            // Read benchmark results
+            const mainResults = JSON.parse(fs.readFileSync('benchmark-results.json', 'utf8'));
+            const toolResults = JSON.parse(fs.readFileSync('tool-benchmark-results.json', 'utf8'));
+            const transportResults = JSON.parse(fs.readFileSync('transport-benchmark-results.json', 'utf8'));
+            
+            console.log('📈 Performance Summary:');
+            console.log('=======================');
+            console.log(\`Main benchmarks: \${Array.isArray(mainResults) ? mainResults.length : mainResults.results?.length || 0} tests\`);
+            console.log(\`Tool benchmarks: \${Array.isArray(toolResults) ? toolResults.length : toolResults.results?.length || 0} tests\`);
+            console.log(\`Transport benchmarks: \${Array.isArray(transportResults) ? transportResults.length : transportResults.results?.length || 0} tests\`);
+            
+            // Check for performance regressions (simplified)
+            const normalizeResults = (results) => Array.isArray(results) ? results : (results.results || []);
+            const allResults = [
+              ...normalizeResults(mainResults),
+              ...normalizeResults(toolResults),
+              ...normalizeResults(transportResults)
+            ];
+            
+            const slowOperations = allResults.filter(r => (r.ops || r.value) < 1000);
+            if (slowOperations.length > 0) {
+              console.log('⚠️ Slow operations detected:');
+              slowOperations.forEach(op => {
+                const opsValue = op.ops || op.value || 0;
+                console.log(\`  - \${op.name}: \${opsValue} ops/sec\`);
+              });
+            } else {
+              console.log('✅ All operations performing within acceptable ranges');
+            }
+          "
+          
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-results
+          path: |
+            benchmark-results.json
+            tool-benchmark-results.json
+            transport-benchmark-results.json
+          retention-days: 30
+
+  memory-profiling:
+    name: Memory Profiling
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci --include=dev
+        
+      - name: Build project
+        run: npm run build
+        
+      - name: Memory usage profiling
+        run: |
+          echo "🧠 Memory Usage Profiling..."
+          node --expose-gc -e "
+            import('./dist/utils/config.js').then(({ loadConfig }) => {
+              const iterations = 1000;
+              const memBefore = process.memoryUsage();
+              
+              console.log('Memory before:', memBefore);
+              
+              // Test config loading memory usage
+              for (let i = 0; i < iterations; i++) {
+                loadConfig();
+              }
+              
+              if (global.gc) {
+                global.gc();
+              }
+              
+              const memAfter = process.memoryUsage();
+              console.log('Memory after:', memAfter);
+              
+              const heapGrowth = memAfter.heapUsed - memBefore.heapUsed;
+              console.log(\`Heap growth: \${(heapGrowth / 1024 / 1024).toFixed(2)} MB\`);
+              console.log(\`Per operation: \${(heapGrowth / iterations / 1024).toFixed(2)} KB\`);
+              
+              if (heapGrowth > 50 * 1024 * 1024) { // 50MB threshold
+                console.log('⚠️ Potential memory leak detected');
+                process.exit(1);
+              } else {
+                console.log('✅ Memory usage within acceptable limits');
+              }
+            });
+          "
+
+  load-testing:
+    name: Load Testing
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci --include=dev
+        
+      - name: Build project
+        run: npm run build
+        
+      - name: Load testing simulation
+        run: |
+          echo "🔥 Load Testing Simulation..."
+          node -e "
+            import('./dist/tools/index.js').then(({ getToolHandler }) => {
+              const concurrentUsers = 20;
+              const operationsPerUser = 50;
+              
+              console.log(\`Testing \${concurrentUsers} concurrent users, \${operationsPerUser} ops each\`);
+              
+              const startTime = Date.now();
+              
+              const userPromises = Array.from({ length: concurrentUsers }, async (_, userId) => {
+              const handler = getToolHandler('ct_gov_studies');
+              if (!handler) {
+                throw new Error('ct_gov_studies handler not found');
+                }
+                
+                const operations = Array.from({ length: operationsPerUser }, (_, opId) => 
+                  handler({
+                    method: 'suggest',
+                    input: 'diabetes',
+                    dictionary: 'Condition'
+                  })
+                );
+                
+                return Promise.all(operations);
+              });
+              
+              return Promise.all(userPromises).then(() => {
+                const endTime = Date.now();
+                const totalOps = concurrentUsers * operationsPerUser;
+                const duration = (endTime - startTime) / 1000;
+                const opsPerSecond = totalOps / duration;
+                
+                console.log(\`Completed \${totalOps} operations in \${duration.toFixed(2)}s\`);
+                console.log(\`Throughput: \${opsPerSecond.toFixed(0)} ops/sec\`);
+                
+                if (opsPerSecond < 100) {
+                  console.log('⚠️ Throughput below expected threshold (100 ops/sec)');
+                } else {
+                  console.log('✅ Load test passed');
+                }
+              });
+            }).catch(console.error);
+          " 
