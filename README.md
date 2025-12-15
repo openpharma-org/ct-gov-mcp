@@ -2,36 +2,32 @@
 
 A specialized Model Context Protocol (MCP) server that provides comprehensive access to ClinicalTrials.gov data through two powerful tools for clinical trial research and discovery.
 
-## 🔬 Features
+## Features
 
-- **🔍 Clinical Trial Search** - Search 400,000+ clinical trials with advanced filtering
-- **🔥 Complex Query Support** - Advanced search expressions with Boolean operators, field targeting, and date ranges
-- **🆕 OR Operator Support** - NEW! Use OR syntax in all parameters (e.g., "obesity OR weight loss", "recruiting OR active_not_recruiting")
-- **💡 Term Suggestions** - Get accurate terminology from ClinicalTrials.gov dictionaries
-- **🎯 Advanced Filtering** - Filter by phase, status, demographics, location, sponsors, and more
-- **📄 Pagination Support** - Navigate large result sets with token-based pagination
-- **📊 Rich Results** - Formatted markdown output with study details and direct links
-- **🌐 Multiple Transports** - Supports stdio, HTTP, and SSE transport modes
-- **⚡ High Performance** - Optimized for fast searches and suggestions
-- **✅ Enhanced Reliability** - Recently improved parameter mapping for 98%+ success rate
+- **Clinical Trial Search** - Search 400,000+ clinical trials with advanced filtering
+- **Complex Query Support** - Advanced search expressions with Boolean operators, field targeting, and date ranges
+- **OR Operator Support** - NEW! Use OR syntax in all parameters (e.g., "obesity OR weight loss", "recruiting OR active_not_recruiting")
+- **Term Suggestions** - Get accurate terminology from ClinicalTrials.gov dictionaries
+- **Advanced Filtering** - Filter by phase, status, demographics, location, sponsors, and more
+- **Pagination Support** - Navigate large result sets with token-based pagination
+- **Rich Results** - Formatted markdown output with study details and direct links
+- **Multiple Transports** - Supports stdio, HTTP, and SSE transport modes
+- **High Performance** - Optimized for fast searches and suggestions
+- **Enhanced Reliability** - Recently improved parameter mapping for 98%+ success rate
 
-## 🚀 Quick Start
-
-### Usage with Cursor
-
-Add to your `~/.cursor/mcp.json`:
+## Quick Start
 
 ```json
 {
    "ct.gov-mcp-server": {
       "command": "npx",
-      "args": ["-y","@openpharma-org/ct-gov-mcp@0.4.7"],
+      "args": ["-y","/path/to/ct.gov-mcp/server/src/index.js"],
       "env": {}
     },
 }
 ```
 
-## 🛠️ Available Tools
+## Available Tools
 
 ### `ct_gov_studies` - Unified ClinicalTrials.gov Tool
 
@@ -55,7 +51,7 @@ Search clinical trials with comprehensive filtering options (35 parameters cover
 - **`id`** - Search by study ID, NCT ID, or acronym. **NEW:** Use OR operator to combine multiple IDs
 - **`complexQuery`** - Advanced search expressions using CT.gov operators
 
-#### Complex Query Support 🔥 NEW
+#### Complex Query Support
 Use advanced CT.gov search operators for sophisticated queries:
 
 **Boolean Operators:** AND, OR, NOT, parentheses () for grouping  
@@ -66,7 +62,7 @@ Use advanced CT.gov search operators for sophisticated queries:
 
 **Available AREA fields:** Phase, StdAge, DesignAllocation, DesignMasking, DesignInterventionModel, DesignPrimaryPurpose, StudyType, InterventionType, LeadSponsorClass, InterventionName, DesignObservationalModel, DesignTimePerspective, DesignWhoMasked, StudyFirstPostDate, etc.
 
-#### OR Operator Support 🔥 NEW
+#### OR Operator Support
 All text-based and enum parameters now support the OR operator for powerful multi-value searches:
 
 **Text Parameters with OR Support:**
@@ -85,21 +81,21 @@ All text-based and enum parameters now support the OR operator for powerful mult
 - `masking`: `"double OR triple"` - Find various blinding approaches
 
 **Why Use OR Operators:**
-- 📈 **Increased Results**: `"obesity"` (438 studies) vs `"obesity OR weight loss"` (479 studies)
-- 🎯 **Precise Targeting**: Search related conditions without multiple queries
-- ⚡ **Efficiency**: One search instead of multiple separate searches
-- 🔍 **Comprehensive Coverage**: Ensure you don't miss relevant studies
+- **Increased Results**: `"obesity"` (438 studies) vs `"obesity OR weight loss"` (479 studies)
+- **Precise Targeting**: Search related conditions without multiple queries
+- **Efficiency**: One search instead of multiple separate searches
+- **Comprehensive Coverage**: Ensure you don't miss relevant studies
 
 #### Advanced Filtering
 - **`phase`** - Clinical trial phases (PHASE0, PHASE1, PHASE2, PHASE3, PHASE4, EARLY_PHASE1, NA)
-- **`status`** - Recruitment status including expanded access programs. **NEW:** Supports OR combinations (e.g., "recruiting OR active_not_recruiting")
-- **`ages`** - Age groups (child, adult, older_adult) or custom ranges. **NEW:** Supports OR combinations (e.g., "child OR adult")
+- **`status`** - Recruitment status including expanded access programs. Supports OR combinations (e.g., "recruiting OR active_not_recruiting")
+- **`ages`** - Age groups (child, adult, older_adult) or custom ranges. Supports OR combinations (e.g., "child OR adult")
 - **`sex`** - Gender filter (all, m, f)
-- **`location`** - Geographic filtering (city, state, country). **NEW:** Supports OR combinations (e.g., "Texas OR California")
-- **`lead`** - Lead sponsor organizations. **NEW:** Supports OR combinations (e.g., "Pfizer OR Merck")
+- **`location`** - Geographic filtering (city, state, country). Supports OR combinations (e.g., "Texas OR California")
+- **`lead`** - Lead sponsor organizations. Supports OR combinations (e.g., "Pfizer OR Merck")
 - **`healthy`** - Studies accepting healthy volunteers
-- **`studyType`** - Study methodology (interventional, observational, expanded access). **NEW:** Supports OR combinations (e.g., "interventional OR observational")
-- **`funderType`** - Funding sources (NIH, federal, industry, other). **NEW:** Supports OR combinations (e.g., "nih OR industry")
+- **`studyType`** - Study methodology (interventional, observational, expanded access).Supports OR combinations (e.g., "interventional OR observational")
+- **`funderType`** - Funding sources (NIH, federal, industry, other). Supports OR combinations (e.g., "nih OR industry")
 - **`results`** - Studies with/without published results
 - **`docs`** - Document availability (protocol, statistical plans, consent forms)
 - **`violation`** - FDA compliance/violation filtering
@@ -302,7 +298,7 @@ Retrieve comprehensive information for a specific clinical trial by NCT ID:
 }
 ```
 
-## 🎯 Workflow Examples
+## Workflow Examples
 
 ### Finding Diabetes Trials
 1. **Get accurate condition name:**
@@ -325,7 +321,7 @@ Retrieve comprehensive information for a specific clinical trial by NCT ID:
    }
    ```
 
-### Finding Obesity Drug Trials with OR Operators 🔥 NEW
+### Finding Obesity Drug Trials with OR Operators 
 1. **Find active obesity/weight loss drug trials in multiple phases:**
    ```json
    {
@@ -426,7 +422,7 @@ Retrieve comprehensive information for a specific clinical trial by NCT ID:
 
 This provides comprehensive study details including protocol design, eligibility criteria, contact information, and current status.
 
-## 🧪 Comprehensive Testing & Query Examples
+## Comprehensive Testing & Query Examples
 
 *The following section documents real-world testing performed on the CT.gov MCP server, including 25+ successful queries across all methods and parameters. This demonstrates the system's robust functionality and provides extensive examples for users.*
 
@@ -443,7 +439,7 @@ This provides comprehensive study details including protocol design, eligibility
 - `studyType: "int"` → `studyType: "interventional"`  
 - `status: "rec"` → `status: "recruiting"`
 
-### **🔍 Search Method - Real Examples**
+### **Search Method - Real Examples**
 
 #### **Basic Condition Searches**
 ```json
@@ -507,7 +503,7 @@ This provides comprehensive study details including protocol design, eligibility
 // Results: High-quality clinical trials for autoimmune disease research
 ```
 
-#### **Recently Fixed Parameter Combinations** ✅ NEW
+#### **Recently Fixed Parameter Combinations** 
 *These examples demonstrate parameter values that were corrected to work properly with the CT.gov API v2:*
 
 ```json
@@ -515,8 +511,8 @@ This provides comprehensive study details including protocol design, eligibility
 {
   "method": "search",
   "condition": "Parkinson disease",
-  "ages": "older_adult",              // ✅ Fixed: was "older"
-  "studyType": "interventional",      // ✅ Fixed: was "int"
+  "ages": "older_adult",
+  "studyType": "interventional",
   "pageSize": 3
 }
 // Results: Land/water physiotherapy studies, brain perfusion research, motor function trials
@@ -528,7 +524,7 @@ This provides comprehensive study details including protocol design, eligibility
   "method": "search",
   "condition": "chronic fatigue syndrome",
   "location": "Netherlands",
-  "status": "recruiting",             // ✅ Fixed: was "rec"
+  "status": "recruiting",
   "pageSize": 3
 }
 // Results: Mixed-methods quantitative and qualitative studies currently enrolling
@@ -540,7 +536,7 @@ This provides comprehensive study details including protocol design, eligibility
   "method": "search",
   "condition": "Cannabis",
   "location": "Netherlands",
-  "status": "completed",              // ✅ Fixed: was "com"
+  "status": "completed",
   "pageSize": 3
 }
 // Results: THC safety studies, Namisol trials, behavioral disturbances in dementia
@@ -551,9 +547,9 @@ This provides comprehensive study details including protocol design, eligibility
 {
   "method": "search",
   "condition": "diabetes",
-  "studyType": "observational",       // ✅ Fixed: was "obs"
+  "studyType": "observational",
   "ages": "adult",
-  "status": "recruiting",             // ✅ Fixed: was "rec"
+  "status": "recruiting",
   "pageSize": 3
 }
 // Results: Wound healing studies, movement behavior research, macrophage metabolism
@@ -565,7 +561,7 @@ This provides comprehensive study details including protocol design, eligibility
   "method": "search",
   "condition": "heart failure",
   "ages": "adult",
-  "studyType": "interventional",      // ✅ Fixed: was "int"
+  "studyType": "interventional",
   "pageSize": 3
 }
 // Results: OPCABG techniques, cardiac rehabilitation resistance training, experimental hyperketonemia
@@ -605,7 +601,7 @@ This provides comprehensive study details including protocol design, eligibility
 // Results: Integrative pediatric treatments, Tuina therapy, gut microbiota studies
 ```
 
-### **💡 Suggest Method - Real Examples**
+### **Suggest Method - Real Examples**
 
 #### **Medical Conditions Dictionary**
 ```json
@@ -669,7 +665,7 @@ This provides comprehensive study details including protocol design, eligibility
 //          "Johns Hopkins All Children's Hospital"
 ```
 
-### **📄 Get Method - Real Examples**
+### **Get Method - Real Examples**
 
 #### **Comprehensive Study Details**
 ```json
@@ -706,7 +702,7 @@ This provides comprehensive study details including protocol design, eligibility
 //          including detailed eligibility criteria and intervention protocols
 ```
 
-### **🎯 Niche and Edge Case Examples**
+### **Niche and Edge Case Examples**
 
 #### **Rare Conditions and Specialized Research**
 ```json
@@ -761,7 +757,7 @@ This provides comprehensive study details including protocol design, eligibility
 // Results: QuANTUM-R leukemia study, "Quantum Touch" pediatric anxiety research
 ```
 
-### **📊 Performance Metrics & System Capabilities**
+### **Performance Metrics & System Capabilities**
 
 #### **Response Times**
 - **Simple searches**: < 2 seconds
@@ -782,7 +778,7 @@ This provides comprehensive study details including protocol design, eligibility
 - **Boolean Logic**: Complex AND/OR/NOT operations function perfectly
 - **Date Ranges**: RANGE[2023-01-01, MAX] syntax works accurately
 
-### **💡 Power User Features Demonstrated**
+### **Power User Features Demonstrated**
 
 #### **Token-Based Pagination**
 ```json
@@ -808,10 +804,10 @@ This provides comprehensive study details including protocol design, eligibility
 // Results: 0 studies (expected for rare condition + small country)
 ```
 
-### **🏆 Best Practices Identified**
+### **Best Practices Identified**
 
 1. **Use suggest method first** for complex medical terminology
-2. **Use OR operators** 🆕 to expand search coverage and find related studies efficiently
+2. **Use OR operators** to expand search coverage and find related studies efficiently
 3. **Complex queries are powerful** for precise targeting  
 4. **Pagination tokens are reliable** for browsing large result sets
 5. **Field selection** in get method reduces response size
@@ -819,95 +815,3 @@ This provides comprehensive study details including protocol design, eligibility
 7. **Date range filtering** excellent for tracking research trends
 8. **Geographic filtering** useful for location-specific studies
 9. **Phase filtering** critical for understanding research stage
-
-### **🎖️ System Assessment: A+ (Excellent)**
-
-**Strengths Demonstrated:**
-- ✅ Comprehensive parameter support (all 35+ search parameters work correctly)
-- ✅ **NEW: Universal OR operator support** across all text and enum parameters
-- ✅ Robust complex query functionality with full Boolean logic
-- ✅ Excellent suggestion engine across all 4 dictionaries
-- ✅ Reliable pagination handling large result sets
-- ✅ High-quality data presentation with rich formatting
-- ✅ Strong international coverage and multilingual support
-- ✅ Historical data access spanning 20+ years
-- ✅ Cutting-edge research coverage (psychedelics, gene therapy, space medicine)
-- ✅ **Recent reliability improvements**: Fixed critical parameter mapping issues for ages, studyType, and status filters
-
-**Verdict: Production-ready with exceptional functionality across all use cases.**
-
-## 🔧 Configuration
-
-### Environment Variables
-- `USE_HTTP` - Enable HTTP mode (default: false)
-- `USE_SSE` - Enable SSE mode (default: false)
-- `PORT` - Server port for HTTP/SSE (default: 3000)
-- `LOG_LEVEL` - Logging level: error, warn, info, debug (default: info)
-
-### Server Modes
-
-#### Stdio Mode (Default - for MCP/Cursor)
-```bash
-npm start
-```
-
-#### HTTP Mode (for Testing)
-```bash
-USE_HTTP=true PORT=3000 npm start
-```
-
-Available endpoints:
-- `GET /health` - Health check
-- `POST /list_tools` - List available tools
-- `POST /ct_gov_studies` - Unified ClinicalTrials.gov operations (search, suggest, get)
-
-#### SSE Mode (for Web Clients)
-```bash
-USE_SSE=true PORT=3000 npm start
-```
-
-SSE endpoint available at `/mcp`
-
-## 🧪 Development
-
-### Running Tests
-```bash
-npm test                    # Run all tests
-npm run test:unit          # Run unit tests only
-npm run test:integration   # Run integration tests only
-npm run test:coverage      # Run with coverage report
-```
-
-### Development Mode
-```bash
-npm run dev                # Start in watch mode
-npm run build              # Build TypeScript
-npm run clean              # Clean build artifacts
-```
-
-```bash
-npm run benchmark          # Run performance benchmarks
-npm run performance        # Monitor performance metrics
-```
-
-## 📊 Technical Details
-
-- **Language:** TypeScript
-- **Runtime:** Node.js
-- **Testing:** Jest (168 tests, 14 test suites)
-- **API:** ClinicalTrials.gov REST API
-- **Transport:** MCP Protocol (stdio/HTTP/SSE)
-- **Build:** TypeScript compiler with ES modules
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🔗 Links
-
-- [ClinicalTrials.gov](https://clinicaltrials.gov/) - Official clinical trials database
-- [MCP Protocol](https://github.com/modelcontextprotocol) - Model Context Protocol
-
----
-
-**Built with love** 
