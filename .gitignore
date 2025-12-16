@@ -39,15 +39,3 @@ tmp/
 *.py
 *.pyc
 __pycache__/
-
-# Test coverage
-coverage/
-
-# Benchmark results (should only exist in gh-pages branch)
-benchmark-results.json
-benchmark-results-detailed.json
-tool-benchmark-results.json
-transport-benchmark-results.json
-performance-report.json
-
-mcp_cortellis.py

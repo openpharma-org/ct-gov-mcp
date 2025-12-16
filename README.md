@@ -20,8 +20,8 @@ A specialized Model Context Protocol (MCP) server that provides comprehensive ac
 ```json
 {
    "ct.gov-mcp-server": {
-      "command": "npx",
-      "args": ["-y","/path/to/ct.gov-mcp/server/src/index.js"],
+      "command": "node",
+      "args": ["/path/to/ct.gov-mcp-server/build/index.js"],
       "env": {}
     },
 }
@@ -43,12 +43,12 @@ A comprehensive tool that consolidates all ClinicalTrials.gov functionality into
 Search clinical trials with comprehensive filtering options (35 parameters covering all ClinicalTrials.gov search capabilities):
 
 #### Core Search Parameters
-- **`condition`** - Medical condition (e.g., "Diabetes Mellitus Type 2"). **NEW:** Use OR operator to combine multiple conditions (e.g., "obesity OR weight loss")
-- **`term`** - Additional search terms (e.g., "Hypertension"). **NEW:** Use OR operator to combine multiple terms (e.g., "diabetes OR hypertension")
-- **`intervention`** - Treatment/drug name (e.g., "Aspirin"). **NEW:** Use OR operator to combine multiple interventions (e.g., "semaglutide OR liraglutide")
-- **`titles`** - Search in study titles/acronyms. **NEW:** Use OR operator to combine multiple terms
-- **`outc`** - Search in outcomes. **NEW:** Use OR operator to combine multiple terms
-- **`id`** - Search by study ID, NCT ID, or acronym. **NEW:** Use OR operator to combine multiple IDs
+- **`condition`** - Medical condition (e.g., "Diabetes Mellitus Type 2"). Use OR operator to combine multiple conditions (e.g., "obesity OR weight loss")
+- **`term`** - Additional search terms (e.g., "Hypertension"). Use OR operator to combine multiple terms (e.g., "diabetes OR hypertension")
+- **`intervention`** - Treatment/drug name (e.g., "Aspirin"). Use OR operator to combine multiple interventions (e.g., "semaglutide OR liraglutide")
+- **`titles`** - Search in study titles/acronyms. Use OR operator to combine multiple terms
+- **`outc`** - Search in outcomes. Use OR operator to combine multiple terms
+- **`id`** - Search by study ID, NCT ID, or acronym. Use OR operator to combine multiple IDs
 - **`complexQuery`** - Advanced search expressions using CT.gov operators
 
 #### Complex Query Support
