@@ -6,22 +6,18 @@ A specialized Model Context Protocol (MCP) server that provides comprehensive ac
 
 - **Clinical Trial Search** - Search 400,000+ clinical trials with advanced filtering
 - **Complex Query Support** - Advanced search expressions with Boolean operators, field targeting, and date ranges
-- **OR Operator Support** - NEW! Use OR syntax in all parameters (e.g., "obesity OR weight loss", "recruiting OR active_not_recruiting")
+- **OR Operator Support** - Use OR syntax in all parameters (e.g., "obesity OR weight loss", "recruiting OR active_not_recruiting")
 - **Term Suggestions** - Get accurate terminology from ClinicalTrials.gov dictionaries
 - **Advanced Filtering** - Filter by phase, status, demographics, location, sponsors, and more
 - **Pagination Support** - Navigate large result sets with token-based pagination
-- **Rich Results** - Formatted markdown output with study details and direct links
-- **Multiple Transports** - Supports stdio, HTTP, and SSE transport modes
-- **High Performance** - Optimized for fast searches and suggestions
-- **Enhanced Reliability** - Recently improved parameter mapping for 98%+ success rate
 
 ## Usage
 
 ```json
 {
-   "ct.gov-mcp-server": {
+   "clinicaltrials-mcp-server": {
       "command": "node",
-      "args": ["/path/to/ct.gov-mcp-server/build/index.js"],
+      "args": ["/path/to/clinicaltrials-mcp-server/build/index.js"],
       "env": {}
     },
 }
