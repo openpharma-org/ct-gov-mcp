@@ -15,11 +15,13 @@ A specialized Model Context Protocol (MCP) server that provides comprehensive ac
 
 ```json
 {
-   "clinicaltrials-mcp-server": {
+  "mcpServers": [
+    "clinicaltrials-mcp-server": {
       "command": "node",
       "args": ["/path/to/clinicaltrials-mcp-server/build/index.js"],
       "env": {}
-    },
+    }
+  ]
 }
 ```
 
