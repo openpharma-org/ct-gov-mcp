@@ -15,7 +15,7 @@ A specialized Model Context Protocol (MCP) server that provides comprehensive ac
 - **High Performance** - Optimized for fast searches and suggestions
 - **Enhanced Reliability** - Recently improved parameter mapping for 98%+ success rate
 
-## Quick Start
+## Usage
 
 ```json
 {
@@ -35,8 +35,8 @@ A comprehensive tool that consolidates all ClinicalTrials.gov functionality into
 
 *The tool includes 18+ comprehensive examples in its schema covering basic searches, complex queries, pagination, suggestions, and detailed study retrieval.*
 
-#### Method Parameter
-- **`method`** - Operation type: `search`, `suggest`, `get` ✅ Required
+#### Method Parameter (required)
+- **`method`** - Operation type: `search`, `suggest`, `get`
 
 ### Search Method (`method: "search"`)
 
@@ -200,7 +200,7 @@ All text-based and enum parameters now support the OR operator for powerful mult
 }
 ```
 
-**OR Operator Examples:** 🔥 NEW
+**OR Operator Examples:**
 ```json
 {
   "method": "search",
@@ -260,8 +260,8 @@ Returns suggestions like: "Diabetes Mellitus", "Diabetes Mellitus Type 1", "Diab
 
 Retrieve comprehensive information for a specific clinical trial by NCT ID:
 
-#### Parameters
-- **`nctId`** - NCT Number (e.g., NCT00841061, NCT04000165) ✅ Required
+#### Parameters 
+- **`nctId`** (required) - NCT Number (e.g., NCT00841061, NCT04000165)
 - **`format`** - Response format: `json`, `csv`, `json.zip`, `fhir.json`, `ris` (default: json)
 - **`markupFormat`** - Markup format: `markdown`, `legacy` (default: markdown)
 - **`fields`** - Specific fields to return (array, optional)
@@ -434,11 +434,6 @@ This provides comprehensive study details including protocol design, eligibility
 **Edge Cases:** 8+ niche scenarios  
 **Success Rate:** >98% (significantly improved after parameter fixes)
 
-**Recent Improvements:** ✅ Fixed critical parameter mapping issues:
-- `ages: "older"` → `ages: "older_adult"`
-- `studyType: "int"` → `studyType: "interventional"`  
-- `status: "rec"` → `status: "recruiting"`
-
 ### **Search Method - Real Examples**
 
 #### **Basic Condition Searches**
@@ -507,7 +502,7 @@ This provides comprehensive study details including protocol design, eligibility
 *These examples demonstrate parameter values that were corrected to work properly with the CT.gov API v2:*
 
 ```json
-// Parkinson Disease + Older Adults + Interventional Studies - Found 3,110 studies ✅
+// Parkinson Disease + Older Adults + Interventional Studies - Found 3,110 studies
 {
   "method": "search",
   "condition": "Parkinson disease",
@@ -519,7 +514,7 @@ This provides comprehensive study details including protocol design, eligibility
 ```
 
 ```json
-// Chronic Fatigue Syndrome in Netherlands + Recruiting - Found 1 study ✅
+// Chronic Fatigue Syndrome in Netherlands + Recruiting - Found 1 study
 {
   "method": "search",
   "condition": "chronic fatigue syndrome",
@@ -531,7 +526,7 @@ This provides comprehensive study details including protocol design, eligibility
 ```
 
 ```json
-// Cannabis Studies in Netherlands + Completed - Found 6 studies ✅
+// Cannabis Studies in Netherlands + Completed - Found 6 studies
 {
   "method": "search",
   "condition": "Cannabis",
@@ -543,7 +538,7 @@ This provides comprehensive study details including protocol design, eligibility
 ```
 
 ```json
-// Diabetes + Observational + Adult + Recruiting - Found 553 studies ✅
+// Diabetes + Observational + Adult + Recruiting - Found 553 studies
 {
   "method": "search",
   "condition": "diabetes",
@@ -556,7 +551,7 @@ This provides comprehensive study details including protocol design, eligibility
 ```
 
 ```json
-// Heart Failure + Adult + Interventional - Found 4,638 studies ✅
+// Heart Failure + Adult + Interventional - Found 4,638 studies
 {
   "method": "search",
   "condition": "heart failure",
